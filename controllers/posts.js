@@ -1,9 +1,22 @@
 const Post = require("../models/Post");
 
+//This one gets back all the posts
 exports.getPosts = async (req, res) => {
   try {
     const retrievedPosts = await Post.find();
     res.json(retrievedPosts);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
+//Get a specific Post
+exports.getPostById = async (req, res) => {
+  const param = req.params.id;
+  console.log(param);
+  try {
+    const retrievedPostById = await Post.findById(param);
+    res.json(retrievedPostById);
   } catch (err) {
     res.json({ message: err });
   }
