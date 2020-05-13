@@ -1,25 +1,24 @@
 const Post = require("../models/Post");
 
-exports.message = (req, res) => {
-  res.send("We are on posts");
+exports.getPosts = async (req, res) => {
+  try {
+    const retrievedPosts = await Post.find();
+    res.json(retrievedPosts);
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
 
-exports.specific = (req, res) => {
-  res.send("We are on specific");
-};
-
-exports.test = (req, res) => {
+exports.createPost = async (req, res) => {
   const post = new Post({
     title: req.body.title,
     description: req.body.description,
   });
 
-  post
-    .save()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
+  try {
+    const savedPost = await post.save();
+    res.json(savedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
