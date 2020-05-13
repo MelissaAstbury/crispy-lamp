@@ -35,6 +35,18 @@ exports.createPost = async (req, res) => {
   }
 };
 
+exports.updatePost = async (req, res) => {
+  try {
+    const updatedPost = await Post.updateOne(
+      { _id: req.params.id },
+      { $set: { title: req.body.title } }
+    );
+    res.json(updatedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
 exports.deleteById = async (req, res) => {
   try {
     const removedPost = await Post.deleteOne({ _id: req.params.id });

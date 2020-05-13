@@ -7,6 +7,8 @@ router.get("/:id", PostController.getPostById);
 
 router.delete("/:id", PostController.deleteById);
 
+router.patch("/:id", PostController.updatePost);
+
 router.get("", PostController.getPosts);
 
 router.post("/", PostController.createPost);
