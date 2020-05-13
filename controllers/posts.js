@@ -13,7 +13,6 @@ exports.getPosts = async (req, res) => {
 //Get a specific Post
 exports.getPostById = async (req, res) => {
   const param = req.params.id;
-  console.log(param);
   try {
     const retrievedPostById = await Post.findById(param);
     res.json(retrievedPostById);
@@ -31,6 +30,15 @@ exports.createPost = async (req, res) => {
   try {
     const savedPost = await post.save();
     res.json(savedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
+exports.deleteById = async (req, res) => {
+  try {
+    const removedPost = await Post.deleteOne({ _id: req.params.id });
+    res.json(removedPost);
   } catch (err) {
     res.json({ message: err });
   }
