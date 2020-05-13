@@ -1,14 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const app = express();
 
 const config = require("./config");
 
 //Import Routes
 const postsRoute = require("./routes/posts");
-
-//Routes
-app.use("/posts", postsRoute);
 
 // Connect to Database
 mongoose.set("useCreateIndex", true);
@@ -23,6 +22,18 @@ mongoose
   .catch((err) => {
     console.log("Connection Failed!", err);
   });
+
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(cors());
+
+//Routes
+app.use("/posts", postsRoute);
 
 //How to listen to the server
 app.listen(8000);
